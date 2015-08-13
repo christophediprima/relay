@@ -125,10 +125,11 @@ class RelayDefaultNetworkLayer {
       init = {
         body: JSON.stringify({
           query: request.getQueryString(),
-          variables: JSON.stringify(request.getVariables()),
+          variables: request.getVariables(),
         }),
         headers: {'Content-Type': 'application/json'},
         method: 'POST',
+        credentials: 'same-origin',
       };
     }
     return fetch(this._uri, init).then(throwOnServerError);
@@ -141,12 +142,13 @@ class RelayDefaultNetworkLayer {
     return fetchWithRetries(this._uri, {
       body: JSON.stringify({
         query: request.getQueryString(),
-        variables: JSON.stringify(request.getVariables()),
+        variables: request.getVariables(),
       }),
       fetchTimeout: this._timeout,
       headers: {'Content-Type': 'application/json'},
       method: 'POST',
       retryDelays: this._retryDelays,
+      credentials: 'same-origin',
     });
   }
 }
